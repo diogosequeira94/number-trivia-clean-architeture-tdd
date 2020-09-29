@@ -1,9 +1,9 @@
-import 'package:clean_architecture_tdd_course/features/number_trivia/domain/entities/number_trivia.dart';
-import 'package:clean_architecture_tdd_course/features/number_trivia/domain/repositories/number_trivia_repository.dart';
-import 'package:clean_architecture_tdd_course/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:clean_architecture_tdd_course/features/number_trivia/domain/entities/number_trivia.dart';
+import '../../../../../lib/features/number_trivia/domain/repositories/number_trivia_repository.dart';
+import '../../../../../lib/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 
 class MockNumberTriviaRepository extends Mock
     implements NumberTriviaRepository {}
@@ -17,20 +17,19 @@ void main() {
     usecase = GetConcreteNumberTrivia(mockNumberTriviaRepository);
   });
 
-  final tNumber = 1;
-  final tNumberTrivia = NumberTrivia(number: 1, text: 'test');
+  final testNumber = 1;
+  final testNumberTrivia = NumberTrivia(number: testNumber, text: 'test');
 
-  test(
-    'should get trivia for the number from the repository',
-    () async {
+  test('should get trivia number from the repository',
+        () async {
       // arrange
       when(mockNumberTriviaRepository.getConcreteNumberTrivia(any))
-          .thenAnswer((_) async => Right(tNumberTrivia));
+          .thenAnswer((_) async => Right(testNumberTrivia));
       // act
-      final result = await usecase(Params(number: tNumber));
+      final result = await usecase(GetConcreteNumberTriviaParams(number: testNumber));
       // assert
-      expect(result, Right(tNumberTrivia));
-      verify(mockNumberTriviaRepository.getConcreteNumberTrivia(tNumber));
+      expect(result, Right(testNumberTrivia));
+      verify(mockNumberTriviaRepository.getConcreteNumberTrivia(testNumber));
       verifyNoMoreInteractions(mockNumberTriviaRepository);
     },
   );
