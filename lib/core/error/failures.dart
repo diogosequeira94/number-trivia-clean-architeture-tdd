@@ -6,12 +6,12 @@ abstract class Failure extends Equatable {
 
 // General Failures
 
-class ServerException extends Failure {
+class ServerFailure extends Failure {
   @override
   List<Object> get props =>[];
 }
 
-class CacheException extends Failure{
+class CacheFailure extends Failure{
   @override
   List<Object> get props => [];
 }
